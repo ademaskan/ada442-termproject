@@ -21,40 +21,132 @@ col1, col2 = st.columns(2)
 
 with col1:
     age = st.slider('Age', 18, 100, 40)
-    job = st.selectbox('Job', ['admin.', 'blue-collar', 'entrepreneur', 'housemaid', 'management', 
-                            'retired', 'self-employed', 'services', 'student', 'technician', 
-                            'unemployed', 'unknown'])
-    marital = st.selectbox('Marital Status', ['divorced', 'married', 'single', 'unknown'])
-    education = st.selectbox('Education', ['basic.4y', 'basic.6y', 'basic.9y', 'high.school', 
-                                        'illiterate', 'professional.course', 'university.degree', 
-                                        'unknown'])
-    default = st.selectbox('Has Credit in Default?', ['no', 'yes', 'unknown'])
-    housing = st.selectbox('Has Housing Loan?', ['no', 'yes', 'unknown'])
-    loan = st.selectbox('Has Personal Loan?', ['no', 'yes', 'unknown'])
+    
+    # Job options with more descriptive labels
+    job_options = {
+        'admin.': 'Administrative',
+        'blue-collar': 'Blue Collar Worker',
+        'entrepreneur': 'Entrepreneur',
+        'housemaid': 'Housemaid/Cleaning',
+        'management': 'Management',
+        'retired': 'Retired',
+        'self-employed': 'Self-Employed',
+        'services': 'Services Sector',
+        'student': 'Student',
+        'technician': 'Technical Professional',
+        'unemployed': 'Unemployed',
+        'unknown': 'Not Specified'
+    }
+    job_display = list(job_options.keys())
+    job_labels = list(job_options.values())
+    job = st.selectbox('Occupation', options=job_display, format_func=lambda x: job_options[x])
+    
+    # Marital status with better labels
+    marital_options = {
+        'divorced': 'Divorced/Separated',
+        'married': 'Married/Cohabiting',
+        'single': 'Single',
+        'unknown': 'Not Specified'
+    }
+    marital = st.selectbox('Marital Status', options=list(marital_options.keys()), 
+                          format_func=lambda x: marital_options[x])
+    
+    # Education with clearer descriptions
+    education_options = {
+        'basic.4y': 'Basic Education (4 years)',
+        'basic.6y': 'Basic Education (6 years)',
+        'basic.9y': 'Basic Education (9 years)',
+        'high.school': 'High School Diploma',
+        'illiterate': 'No Formal Education',
+        'professional.course': 'Professional Certificate',
+        'university.degree': 'University Degree',
+        'unknown': 'Not Specified'
+    }
+    education = st.selectbox('Education Level', options=list(education_options.keys()), 
+                            format_func=lambda x: education_options[x])
+    
+    # Yes/No options with clearer labels
+    yes_no_options = {
+        'no': 'No',
+        'yes': 'Yes',
+        'unknown': 'Not Specified'
+    }
+    default = st.selectbox('Credit Default History', options=list(yes_no_options.keys()), 
+                          format_func=lambda x: yes_no_options[x])
+    housing = st.selectbox('Housing Loan', options=list(yes_no_options.keys()), 
+                          format_func=lambda x: yes_no_options[x])
+    loan = st.selectbox('Personal Loan', options=list(yes_no_options.keys()), 
+                       format_func=lambda x: yes_no_options[x])
 
 with col2:
-    contact = st.selectbox('Contact Communication Type', ['cellular', 'telephone'])
-    month = st.selectbox('Last Contact Month', ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 
-                                            'jul', 'aug', 'sep', 'oct', 'nov', 'dec'])
-    day_of_week = st.selectbox('Last Contact Day of Week', ['mon', 'tue', 'wed', 'thu', 'fri'])
-    duration = st.slider('Last Contact Duration (seconds)', 0, 5000, 250)
-    campaign = st.slider('Number of Contacts During Campaign', 1, 20, 2)
-    pdays = st.slider('Days Since Last Contact', 0, 999, 999, help="999 means client was not previously contacted")
-    previous = st.slider('Number of Contacts Before Campaign', 0, 10, 0)
-    poutcome = st.selectbox('Outcome of Previous Campaign', ['failure', 'nonexistent', 'success'])
+    # Contact method with better descriptions
+    contact_options = {
+        'cellular': 'Mobile Phone',
+        'telephone': 'Landline Phone'
+    }
+    contact = st.selectbox('Contact Method', options=list(contact_options.keys()), 
+                          format_func=lambda x: contact_options[x])
+    
+    # Full month names instead of abbreviations
+    month_options = {
+        'jan': 'January',
+        'feb': 'February',
+        'mar': 'March',
+        'apr': 'April',
+        'may': 'May',
+        'jun': 'June', 
+        'jul': 'July',
+        'aug': 'August',
+        'sep': 'September',
+        'oct': 'October',
+        'nov': 'November',
+        'dec': 'December'
+    }
+    month = st.selectbox('Month of Last Contact', options=list(month_options.keys()), 
+                        format_func=lambda x: month_options[x])
+    
+    # Full day names instead of abbreviations
+    day_options = {
+        'mon': 'Monday',
+        'tue': 'Tuesday',
+        'wed': 'Wednesday',
+        'thu': 'Thursday',
+        'fri': 'Friday'
+    }
+    day_of_week = st.selectbox('Day of Last Contact', options=list(day_options.keys()), 
+                              format_func=lambda x: day_options[x])
+    
+    duration = st.slider('Last Call Duration (seconds)', 0, 5000, 250)
+    campaign = st.slider('Number of Contacts in Current Campaign', 1, 20, 2)
+    pdays = st.slider('Days Since Previous Contact', 0, 999, 999, help="999 means client was not previously contacted")
+    previous = st.slider('Previous Campaign Contacts', 0, 10, 0)
+    
+    # More descriptive outcome options
+    outcome_options = {
+        'failure': 'Unsuccessful',
+        'nonexistent': 'No Previous Campaign',
+        'success': 'Successful'
+    }
+    poutcome = st.selectbox('Previous Campaign Outcome', options=list(outcome_options.keys()),
+                           format_func=lambda x: outcome_options[x])
 
 # Economic indicators (average values as defaults)
 st.header('Economic Indicators')
 col3, col4 = st.columns(2)
 
 with col3:
-    emp_var_rate = st.slider('Employment Variation Rate', -3.0, 2.0, 0.0, step=0.1)
-    cons_price_idx = st.slider('Consumer Price Index', 90.0, 95.0, 93.5, step=0.1)
-    cons_conf_idx = st.slider('Consumer Confidence Index', -50.0, -25.0, -40.0, step=0.5)
+    emp_var_rate = st.slider('Employment Variation Rate (quarterly)', -3.0, 2.0, 0.0, step=0.1, 
+                            help="Quarterly indicator of employment change")
+    cons_price_idx = st.slider('Consumer Price Index (monthly)', 90.0, 95.0, 93.5, step=0.1,
+                              help="Monthly indicator of inflation")
+    cons_conf_idx = st.slider('Consumer Confidence Index (monthly)', -50.0, -25.0, -40.0, step=0.5,
+                             help="Monthly indicator of consumer confidence")
 
 with col4:
-    euribor3m = st.slider('Euribor 3 Month Rate', 0.5, 5.0, 3.0, step=0.1)
-    nr_employed = st.slider('Number of Employees', 4900.0, 5300.0, 5100.0, step=10.0)
+    euribor3m = st.slider('Euribor 3-Month Rate (%)', 0.5, 5.0, 3.0, step=0.1,
+                         help="Daily indicator of Euro interbank interest rate")
+    nr_employed = st.slider('Number of Employees (quarterly)', 4900.0, 5300.0, 5100.0, step=10.0,
+                          help="Quarterly indicator of total workforce")
 
 # Create a DataFrame with the input features
 def create_input_df():
