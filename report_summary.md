@@ -30,5 +30,9 @@
 
 By leveraging both the insights from our analysis and the deployed model application, the bank can significantly improve the efficiency of its marketing campaigns and increase the success rate of term deposit subscriptions.
 
-** Streamlit link**
+Streamlit link
 https://ada442-termproject-hdnnmaz3zupemanhtwd9sa.streamlit.app/
+
+Adem Aşkan
+Mehmet Bektaş
+Koray Başkoca
